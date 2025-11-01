@@ -1,1 +1,1 @@
-# CSE 341 Week 3-4 Project - E-commerce API
+# E-commerce API - CSE 341 Week 3-4 Project
