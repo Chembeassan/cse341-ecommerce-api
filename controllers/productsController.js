@@ -13,8 +13,22 @@ const getAllProducts = async (req, res) => {
 // Create new product
 const createProduct = async (req, res) => {
   try {
+    const { name, price, category, description, brand, stockQuantity } = req.body;
+    
+    // Basic validation
+    if (!name || !price || !category) {
+      return res.status(400).json({ 
+        error: 'Name, price, and category are required' 
+      });
+    }
+
     const productData = {
-      ...req.body,
+      name,
+      price: parseFloat(price),
+      category,
+      description: description || '',
+      brand: brand || '',
+      stockQuantity: stockQuantity || 0,
       createdAt: new Date()
     };
 

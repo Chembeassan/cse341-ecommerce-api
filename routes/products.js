@@ -29,10 +29,19 @@ router.get('/', productsController.getAllProducts);
  *             required:
  *               - name
  *               - price
+ *               - category
  *             properties:
  *               name:
  *                 type: string
  *               price:
+ *                 type: number
+ *               category:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               brand:
+ *                 type: string
+ *               stockQuantity:
  *                 type: number
  *     responses:
  *       201:
