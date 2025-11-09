@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const swaggerConfig = require('./swagger');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 app
   .use(bodyParser.json())
@@ -14,11 +14,8 @@ app
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     next();
   })
-  .use('/products', require('./routes/products')); // Only products for now
-
-// Comment out until we create these routes
-// .use('/orders', require('./routes/orders'))
-// .use('/customers', require('./routes/customers'))
+  .use('/products', require('./routes/products'))
+  .use('/orders', require('./routes/orders')); 
 
 // Swagger documentation
 swaggerConfig(app);

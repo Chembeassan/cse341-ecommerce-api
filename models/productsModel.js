@@ -1,23 +1,66 @@
-const { getDb } = require('../db/connect');
 const { ObjectId } = require('mongodb');
+const database = require('../db/connect');
 
-// Get all products
 const getAllProducts = async () => {
-  const db = getDb();
-  const products = await db.collection('products').find().toArray();
-  console.log(`📦 Found ${products.length} products`);
-  return products;
+  try {
+    const db = database.getDb();
+    const result = await db.collection('products').find();
+    return result.toArray();
+  } catch (error) {
+    throw error;
+  }
 };
 
-// Create new product
+const getProductById = async (id) => {
+  try {
+    const db = database.getDb();
+    const productId = new ObjectId(id);
+    const result = await db.collection('products').findOne({ _id: productId });
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const createProduct = async (productData) => {
-  const db = getDb();
-  const result = await db.collection('products').insertOne(productData);
-  console.log(`➕ Created new product with ID: ${result.insertedId}`);
-  return result;
+  try {
+    const db = database.getDb();
+    const result = await db.collection('products').insertOne(productData);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateProduct = async (id, updateData) => {
+  try {
+    const db = database.getDb();
+    const productId = new ObjectId(id);
+    const result = await db.collection('products').updateOne(
+      { _id: productId },
+      { $set: updateData }
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteProduct = async (id) => {
+  try {
+    const db = database.getDb();
+    const productId = new ObjectId(id);
+    const result = await db.collection('products').deleteOne({ _id: productId });
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
   getAllProducts,
-  createProduct
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct
 };
