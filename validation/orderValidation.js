@@ -47,8 +47,18 @@ const orderSchema = Joi.object({
     'string.min': 'Shipping address must be at least 10 characters long',
     'any.required': 'Shipping address is required'
   }),
-  paymentMethod: Joi.string().valid('credit card', 'paypal', 'bank transfer').default('credit card').messages({
-    'any.only': 'Payment method must be one of: credit card, paypal, bank transfer'
+  // UPDATED: BOTH International AND Malawian payment methods
+  paymentMethod: Joi.string().valid(
+    // International methods
+    'credit_card', 
+    'paypal', 
+    'bank_transfer',
+    // Malawian methods
+    'airtel_money', 
+    'tnm_mpamba', 
+    'cash_on_delivery'
+  ).default('credit_card').messages({
+    'any.only': 'Payment method must be: credit_card, paypal, bank_transfer, airtel_money, tnm_mpamba, or cash_on_delivery'
   })
 });
 
@@ -71,8 +81,18 @@ const updateOrderSchema = Joi.object({
   shippingAddress: Joi.string().min(10).max(500).optional().messages({
     'string.min': 'Shipping address must be at least 10 characters long'
   }),
-  paymentMethod: Joi.string().valid('credit card', 'paypal', 'bank transfer').optional().messages({
-    'any.only': 'Payment method must be one of: credit card, paypal, bank transfer'
+  // UPDATED: BOTH International AND Malawian payment methods
+  paymentMethod: Joi.string().valid(
+    // International methods
+    'credit_card', 
+    'paypal', 
+    'bank_transfer',
+    // Malawian methods
+    'airtel_money', 
+    'tnm_mpamba', 
+    'cash_on_delivery'
+  ).optional().messages({
+    'any.only': 'Payment method must be: credit_card, paypal, bank_transfer, airtel_money, tnm_mpamba, or cash_on_delivery'
   })
 }).min(1).messages({
   'object.min': 'At least one field must be provided for update'
