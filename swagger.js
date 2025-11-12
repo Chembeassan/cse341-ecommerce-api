@@ -11,8 +11,12 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: 'http://localhost:8080',
         description: 'Development server'
+      },
+      {
+        url: 'https://cse341-ecommerce-api-jj7q.onrender.com',
+        description: 'Production server'
       }
     ],
   },

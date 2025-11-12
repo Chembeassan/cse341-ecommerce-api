@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ordersController = require('../controllers/ordersController');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 /**
  * @swagger
@@ -147,5 +148,14 @@ router.put('/:id', ordersController.updateOrder);
  *         description: Order not found
  */
 router.delete('/:id', ordersController.deleteOrder);
+
+// Keep GET routes public  
+router.get('/', ordersController.getAllOrders);
+router.get('/:id', ordersController.getSingleOrder);
+
+// Protect write operations
+router.post('/', isAuthenticated, ordersController.createOrder);
+router.put('/:id', isAuthenticated, ordersController.updateOrder);
+router.delete('/:id', isAuthenticated, ordersController.deleteOrder);
 
 module.exports = router;

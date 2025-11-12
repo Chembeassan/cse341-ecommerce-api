@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/productsController');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 /**
  * @swagger
@@ -140,5 +141,14 @@ router.put('/:id', productsController.updateProduct);
  *         description: Product not found
  */
 router.delete('/:id', productsController.deleteProduct);
+
+// Keep GET routes public
+router.get('/', productsController.getAllProducts);
+router.get('/:id', productsController.getSingleProduct);
+
+// Protect write operations
+router.post('/', isAuthenticated, productsController.createProduct);
+router.put('/:id', isAuthenticated, productsController.updateProduct);
+router.delete('/:id', isAuthenticated, productsController.deleteProduct);
 
 module.exports = router;
